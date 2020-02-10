@@ -3,6 +3,7 @@ const util = require('util');
 const app = express();
 const port = process.env.PORT || 5000;
 
+app.use(express.static(__dirname + '/public'));
 
 //consol.log that your sever is up and running
 app.listen(port, () => console.log(`Listening on port ${port}`));
@@ -20,7 +21,7 @@ app.get('/checkers_bot', (req, res) => {
 	player = req.query.player;
 	console.log(player);
 	const spawn = require('child_process').spawn;
-	const pythonProcess = spawn('python', ["test.py",board, player]);
+	const pythonProcess = spawn('python', ["checkers.py",board, player]);
 	pythonProcess.stdout.on('data', function(data) {
 		console.log(data.toString());
 		res.send( { express: data.toString() });
